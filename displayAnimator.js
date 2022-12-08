@@ -1,8 +1,8 @@
 const BLOTCH_SIZE = 4; // Blotch size in px
-const BLOTCH_DECAY_SPEED = 50; // Blotches change color every 50 ms
+const BLOTCH_DECAY_SPEED = 30; // Blotches change color every 50 ms
 
 const DATAPOINT_SPEED = 20; // Plot a datapoint every 10 ms
-const TIME_MODIFIER = 1 // Time moves 2x as fast
+const TIME_MODIFIER = 3 // Time moves 2x as fast
 
 var colors = [
     'rgb(255, 0, 0)', // red
@@ -98,6 +98,7 @@ class Blotch {
 // Create my DisplayAnimator object.
 var display = new DisplayAnimator("myCanvas");
 var time = 0.0;
+var amplitudeInput = document.getElementById("amplitudeInput");
 
 
 setInterval(addDataPoint, DATAPOINT_SPEED);
@@ -118,11 +119,14 @@ function addDataPoint() {
 
 // x(t) and y(t) function, input t and return x and y in an array in form of [x, y].
 function Eq(t) {
-    // x(t) = 100cos(t)
-    // y(t) = 100sin(t)
-    x = 100*Math.cos(t);
-    y = 100*Math.sin(t);
-    //y = 100*Math.sin(t);
+
+    var amplitude = amplitudeInput.value * 8;
+
+
+    // x(t) = Acos(t)
+    // y(t) = Ascn(t)
+    y = amplitude * Math.sin(t);
+    x = 0;
 
     return [x, -y]; // We must inverse Y because the positive is down relative to the canvas.
 }
